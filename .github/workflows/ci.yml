@@ -9,13 +9,12 @@ env:
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,35 +23,36 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install dependencies 📦
-      #Using npm ci is generally faster than running npm install
-      run: |
-        cd my-app
-        npm ci
-    - name: Build the app 🏗
-      run: |
-        cd my-app
-        npm run build
-    - name: Run component tests 🔸
-      run: |
-        cd my-app
-        npm run test
-    - name: Start the app 📤
-      run: |
-        cd my-app
-        npm start &
-        npx wait-on --timeout 60000
-    - name: Run visual tests 👁
-      run: |
-        cd my-app
-        npm run test:visual        
-        
-    #- run: npm ci
-    #- run: npm run build --if-present
-    #- run: npm test
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Install dependencies 📦
+        #Using npm ci is generally faster than running npm install
+        run: |
+          cd my-app
+          npm ci
+      - name: Build the app 🏗
+        run: |
+          cd my-app
+          npm run build
+      - name: Run component tests 🔸
+        run: |
+          cd my-app
+          npm run test
+      - name: Start the app 📤
+        run: |
+          cd my-app
+          npm start &
+          npx wait-on --timeout 60000
+
+#    - name: Run visual tests 👁
+#      run: |
+#        cd my-app
+#        npm run test:visual
+
+#- run: npm ci
+#- run: npm run build --if-present
+#- run: npm test
